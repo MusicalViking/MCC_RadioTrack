@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  radiotrack:
+    build: .
+    container_name: radiotrack-app
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./backups:/app/backups
+    environment:
+      - DB_PATH=/app/data/inventory.db
+      - LOG_LEVEL=INFO
+      - LOG_FILE=/app/logs/app.log
+      - BACKUP_DIR=/app/backups
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=RadioTrack2025!
+      - ADMIN_FIRST_NAME=Admin
+      - ADMIN_LAST_NAME=User
+      - PASSWORD_EXPIRY_DAYS=60
+      - MIN_PASSWORD_LENGTH=8
+      - SESSION_EXPIRY_HOURS=2
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8501/_stcore/health', timeout=10)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
