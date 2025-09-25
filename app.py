@@ -1144,7 +1144,7 @@ def generate_health_report():
             "✓" if db_exists else "⚠",
         ],
         ["Database Size", db_size, "✓"],
-        ["Last Backup", get_last_backup_date(), get_backup_status()],
+        ["Last Backup Date", get_last_backup_date(), get_backup_status()],
         ["Environment", "Production" if is_production() else "Development", "✓"],
         ["System Files", f"{total_files} files ({python_files} Python)", "✓"],
     ]
@@ -1281,7 +1281,7 @@ def generate_health_report():
         ],
         [
             "Backup Configuration",
-            get_backup_status(),
+            get_backup_status_descriptive(),
             "Verify backup paths and scheduling",
         ],
         ["Error Handling", "✓", "Continue using try/except for error resilience"],
@@ -1416,12 +1416,12 @@ def check_credentials_storage():
 
 
 def get_last_backup_date():
-    """Get the date of the last database backup"""
+    """Get the date of the last database backup using the backup manager"""
     backup_dir = Path(__file__).parent / "backups"
     if not backup_dir.exists():
         return "No backups found"
 
-    backup_files = list(backup_dir.glob("radiotrack_backup_*.db"))
+    backup_files = list(backup_dir.glob("*_backup_*.db"))
     if not backup_files:
         return "No backups found"
 
@@ -1432,12 +1432,12 @@ def get_last_backup_date():
 
 
 def get_backup_status():
-    """Check backup status"""
+    """Check backup status using the backup manager - returns status symbol"""
     backup_dir = Path(__file__).parent / "backups"
     if not backup_dir.exists():
         return "⚠"
 
-    backup_files = list(backup_dir.glob("radiotrack_backup_*.db"))
+    backup_files = list(backup_dir.glob("*_backup_*.db"))
     if not backup_files:
         return "⚠"
 
@@ -1447,6 +1447,29 @@ def get_backup_status():
     days_since_backup = (datetime.now() - backup_time).days
 
     return "✓" if days_since_backup < 7 else "⚠"
+
+
+def get_backup_status_descriptive():
+    """Get descriptive backup status for reports"""
+    backup_dir = Path(__file__).parent / "backups"
+    if not backup_dir.exists():
+        return "No backup directory"
+
+    backup_files = list(backup_dir.glob("*_backup_*.db"))
+    if not backup_files:
+        return "No backups found"
+
+    # Check if the most recent backup is within the last 7 days
+    latest_backup = max(backup_files, key=lambda x: x.stat().st_mtime)
+    backup_time = datetime.fromtimestamp(latest_backup.stat().st_mtime)
+    days_since_backup = (datetime.now() - backup_time).days
+
+    if days_since_backup < 1:
+        return "Recent (today)"
+    elif days_since_backup < 7:
+        return f"Recent ({days_since_backup} days ago)"
+    else:
+        return f"Old ({days_since_backup} days ago)"
 
 
 def is_production():
@@ -1466,34 +1489,14 @@ def check_production_readiness():
 
 
 def clean_old_backups():
-    """Clean up old database backups, keeping the 10 most recent"""
+    """Clean up old database backups using the backup manager"""
     try:
-        backup_dir = Path(__file__).parent / "backups"
-        if not backup_dir.exists():
-            return
-
-        backup_files = list(backup_dir.glob("radiotrack_backup_*.db"))
-        if len(backup_files) <= 10:
-            return
-
-        # Sort by modification time (newest first)
-        backup_files.sort(key=lambda x: x.stat().st_mtime, reverse=True)
-
-        # Delete all but the 10 most recent backups
-        for old_backup in backup_files[10:]:
-            old_backup.unlink()
+        backup_manager = get_backup_manager()
+        backup_manager.clean_old_backups()
+        logger.info("Old backups cleaned successfully")
     except Exception as e:
         logger.error(f"Error cleaning old backups: {str(e)}")
         # Don't raise the exception - this is a maintenance task that shouldn't stop the app
-
-
-def clean_old_backups():
-    backup_dir = Path(__file__).parent / "backups"
-    if backup_dir.exists():
-        backups = [f for f in backup_dir.iterdir() if f.is_file() and f.suffix == ".db"]
-        backups.sort(key=lambda f: f.stat().st_ctime)
-        for backup in backups[:-5]:  # Keep the last 5 backups
-            backup.unlink()
 
 
 def main():
