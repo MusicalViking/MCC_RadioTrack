@@ -17,7 +17,7 @@ load_dotenv(env_path)
 
 # Python Configuration
 PYTHON_PATH = os.getenv(
-    "PYTHON_PATH", r"C:\Users\arthur.belanger\AppData\Local\anaconda3\python.exe"
+    "PYTHON_PATH", "python"
 )
 
 # Application Paths

@@ -16,7 +16,7 @@ services:
       - LOG_FILE=/app/logs/app.log
       - BACKUP_DIR=/app/backups
       - ADMIN_USERNAME=admin
-      - ADMIN_PASSWORD=RadioTrack2025!
+      - ADMIN_PASSWORD=Admin@123!
       - ADMIN_FIRST_NAME=Admin
       - ADMIN_LAST_NAME=User
       - PASSWORD_EXPIRY_DAYS=60

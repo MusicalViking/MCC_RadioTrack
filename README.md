@@ -1,326 +1,499 @@
 # 📡 RadioTrack - Radio Inventory Management System
 
-**Maine Department of Corrections - MCC Windham Tool Control System**
+**Maine Department of Corrections - Professional Radio Equipment Management**
 
 [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)](https://streamlit.io/)
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org/)
 [![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)](https://sqlite.org/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com/)
 
-## 📋 Overview
+---
 
-**RadioTrack** is a comprehensive radio equipment inventory management system specifically designed for the **Maine Department of Corrections** at the **MCC Windham facility**. This application provides corrections officers and supervisors with a powerful tool to track, manage, and maintain radio equipment inventory, ensuring operational readiness and accountability.
+## 🎯 **What is RadioTrack?**
 
-### 🎯 Purpose
+**RadioTrack** is a comprehensive radio equipment inventory management system specifically designed for the **Maine Department of Corrections**. This professional-grade application provides corrections officers and supervisors with powerful tools to track, manage, and maintain radio equipment inventory with military-grade precision and accountability.
 
-- **Tool Control Compliance**: Maintain strict inventory control of radio equipment
-- **Operational Readiness**: Ensure all radio equipment is properly maintained and available
-- **Accountability**: Track equipment assignment, location, and condition
-- **Maintenance Scheduling**: Monitor equipment condition and schedule maintenance
-- **Reporting**: Generate comprehensive reports for compliance and auditing
+### **Mission-Critical Features**
+- ✅ **Tool Control Compliance** - Maintain strict inventory control of all radio equipment
+- ✅ **Operational Readiness** - Ensure all radio equipment is properly maintained and available
+- ✅ **Accountability Tracking** - Monitor equipment assignment, location, and condition
+- ✅ **Maintenance Scheduling** - Track equipment condition and schedule maintenance
+- ✅ **Compliance Reporting** - Generate comprehensive reports for auditing and compliance
 
-## ✨ Features
+---
 
-### 🔐 **User Management**
+## 🚀 **Quick Start Guide**
 
-- **Multi-level Authentication**: Employee and Corrections Supervisor roles
-- **Secure Login System**: Password-based authentication with strength requirements
-- **Role-based Access Control**: Different permissions for different user types
-- **Employee Management**: Add, edit, and manage staff accounts
+### **Option 1: Instant Launch (Recommended)**
+```bash
+# 1. Download/Clone the repository
+git clone <repository-url>
+cd radiotrack
 
-### 📊 **Inventory Management**
+# 2. Install dependencies
+pip install -r requirements.txt
 
-- **Complete Equipment Tracking**: Track all radio equipment with detailed information
-- **Category Organization**: Organize equipment by type (Portable, Base Station, Mobile, etc.)
-- **Location Tracking**: Monitor where equipment is stored or assigned
-- **Condition Monitoring**: Track equipment condition (Excellent, Good, Fair, Poor)
+# 3. Launch the application
+streamlit run app.py
+```
 
-### 🚨 **Alert System**
+### **Option 2: Docker Deployment**
+```bash
+# 1. Download/Clone the repository
+git clone <repository-url>
+cd radiotrack
 
-- **Poor Condition Alerts**: Immediate notifications for equipment needing attention
-- **Visual Indicators**: Color-coded status displays
-- **Maintenance Reminders**: Track when equipment needs service
-- **Urgent Notifications**: Highlight critical maintenance needs
+# 2. Start with Docker Compose
+docker-compose up -d --build
+```
 
-### 📈 **Analytics & Reporting**
+### **Access Your Application**
+🌐 **Open your browser to:** `http://localhost:8501`
 
-- **Dashboard Overview**: Visual summary of inventory status
-- **Statistical Analysis**: Equipment distribution and condition analysis
-- **PDF Report Generation**: Exportable reports for compliance
-- **Health Reports**: System status and database health monitoring
+---
 
-### 🔧 **System Administration**
+## 🔐 **First Login Credentials**
 
-- **Database Management**: Automatic backups and maintenance
-- **Schema Updates**: Seamless database structure updates
-- **Backup Management**: Create and restore database backups
-- **System Monitoring**: Track system performance and resources
+> ⚠️ **IMPORTANT SECURITY NOTICE**
+> Change these credentials immediately after first login!
 
-## 🛠️ Installation
+**Default Administrator Account:**
+- **Username:** `admin`
+- **Password:** `Admin@123!`
 
-### Prerequisites
+**After Login:**
+1. Click your profile in the sidebar
+2. Navigate to "Change Password"
+3. Set a strong, unique password
+4. Add additional employee accounts as needed
 
-- **Python 3.8+**
-- **pip** package manager
-- **Git** for version control
-- **Docker & Docker Compose** (for containerized deployment)
+---
 
-### Quick Start
+## ✨ **Key Features**
 
-1. **Clone the Repository**
+### **👥 User Management System**
+- **Dual-Role Architecture**: Employee and Corrections Supervisor roles
+- **Secure Authentication**: bcrypt password hashing with strength requirements
+- **Role-Based Access Control**: Granular permissions for different user types
+- **Employee Lifecycle Management**: Complete user account administration
 
-   ```bash
-   git clone <repository-url>
-   cd radiotrack
-   ```
+### **📦 Advanced Inventory Management**
+- **Comprehensive Equipment Tracking**: Detailed information for all radio assets
+- **Smart Categorization**: 12 predefined categories (Portable, Base Station, Mobile, etc.)
+- **Location Intelligence**: 18 predefined locations with real-time tracking
+- **Condition Monitoring**: 5-tier condition system (Excellent → Poor → Need for Order)
 
-2. **Install Dependencies**
+### **🚨 Intelligent Alert System**
+- **Real-Time Notifications**: Instant alerts for equipment needing attention
+- **Visual Status Indicators**: Color-coded condition displays
+- **Maintenance Intelligence**: Automated tracking of service requirements
+- **Critical Alerts**: Highlight equipment requiring immediate action
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+### **📊 Analytics & Business Intelligence**
+- **Executive Dashboard**: Visual summary of inventory health
+- **Advanced Analytics**: Equipment distribution and utilization analysis
+- **Professional Reporting**: PDF reports with charts and graphs
+- **System Health Monitoring**: Database and application performance metrics
 
-3. **Initialize Database**
+### **🔧 Enterprise Administration**
+- **Automated Backups**: Scheduled database backups with retention policies
+- **Schema Management**: Seamless database updates and migrations
+- **Backup Recovery**: Point-in-time restore capabilities
+- **System Monitoring**: Real-time performance and resource tracking
 
-   ```bash
-   python -c "from db_manager import initialize_db; initialize_db()"
-   ```
+---
 
-4. **Run the Application**
+## 📋 **Detailed Installation Guide**
 
-   ```bash
-   streamlit run app.py
-   ```
+### **System Requirements**
+- **Operating System**: Windows 10/11, macOS 10.15+, or Linux (Ubuntu 18.04+)
+- **Python Version**: 3.8 or higher (3.11 recommended)
+- **RAM**: 1GB minimum, 2GB recommended
+- **Storage**: 500MB available space
+- **Network**: Internet connection for initial setup
 
-5. **Access the Application**
+### **Method 1: Standard Python Installation**
 
-   - Open your browser to `http://localhost:8501`
-   - **Default admin credentials** (⚠️ **Change immediately after first login**):
-     - **Username**: `admin`
-     - **Password**: `RadioTrack2025!`
+#### **Step 1: Environment Setup**
+```bash
+# Verify Python installation
+python --version
+# Should show: Python 3.8.0 or higher
 
-   **🚨 SECURITY NOTICE**: These are temporary default credentials for initial setup only. Change the admin password immediately after first login for security!
+# Verify pip installation
+pip --version
+# Should show: pip 22.0 or higher
+```
 
-### Docker Deployment
-
-For production deployment, use Docker:
-
+#### **Step 2: Download & Setup**
 ```bash
 # Clone the repository
 git clone <repository-url>
 cd radiotrack
 
-# Configure environment variables in .env file
-# (See DEPLOYMENT.md for details)
+# Create virtual environment (recommended)
+python -m venv radiotrack-env
+source radiotrack-env/bin/activate  # On Windows: radiotrack-env\Scripts\activate
 
-# Start with Docker Compose
+# Install dependencies
+pip install -r requirements.txt
+```
+
+#### **Step 3: Database Initialization**
+```bash
+# Initialize the database
+python -c "from db_manager import initialize_db; initialize_db()"
+```
+
+#### **Step 4: Launch Application**
+```bash
+# Start the application
+streamlit run app.py
+
+# Alternative: Run in background
+nohup streamlit run app.py > radiotrack.log 2>&1 &
+```
+
+### **Method 2: Docker Deployment**
+
+#### **Prerequisites**
+- Docker Desktop 4.0+
+- Docker Compose 2.0+
+
+#### **Quick Docker Setup**
+```bash
+# Clone repository
+git clone <repository-url>
+cd radiotrack
+
+# Configure environment (optional)
+cp .env.example .env
+# Edit .env with your settings
+
+# Deploy with Docker Compose
 docker-compose up -d --build
+
+# View logs
+docker-compose logs -f radiotrack
+
+# Stop the application
+docker-compose down
 ```
 
-Access the application at `http://localhost:8501`
-
-## 🚀 Usage
-
-### **First Time Setup**
-
-1. Login with default admin credentials
-2. Change the admin password immediately
-3. Add employee accounts as needed
-4. Configure categories and locations if needed
-
-### **Daily Operations**
-
-1. **Login** with your assigned credentials
-2. **Check Dashboard** for overview of equipment status
-3. **Review Alerts** for equipment needing attention
-4. **Update Inventory** as equipment is moved or serviced
-5. **Generate Reports** as needed for compliance
-
-### **For Corrections Supervisors**
-
-- **Access Admin Dashboard** for system management
-- **Manage Employee Accounts** and permissions
-- **Generate Compliance Reports**
-- **Oversee Equipment Maintenance** schedules
-- **Monitor System Health** and backups
-
-## 📱 User Interface
-
-### **Dashboard Views**
-
-- **Employee Dashboard**: Standard operational view
-- **Admin Dashboard**: Management and oversight view
-- **Inventory Page**: Detailed equipment listing
-- **Reports**: Exportable documentation
-
-### **Navigation**
-
-- **Sidebar Navigation**: Easy access to all features
-- **Responsive Design**: Works on desktop and mobile
-- **Intuitive Controls**: User-friendly interface
-
-## 🔒 Security Features
-
-- **Password Hashing**: Secure password storage
-- **Session Management**: Automatic logout and session control
-- **Input Validation**: Comprehensive data validation
-- **SQL Injection Protection**: Parameterized queries
-- **Role-Based Access**: Appropriate permissions for each user type
-
-## 📊 Database Structure
-
-### **Core Tables**
-
-- **employees**: User accounts and permissions
-- **items**: Radio equipment inventory
-- **locations**: Storage and assignment locations
-- **categories**: Equipment classification
-- **posts**: Internal announcements
-
-### **Key Features**
-
-- **Automatic Backups**: Regular database backups
-- **Data Integrity**: Foreign key constraints
-- **Audit Trail**: Track all changes and updates
-- **Searchable**: Full-text search capabilities
-
-## 🛠️ Development
-
-### **Project Structure**
-
-```
-radiotrack/
-├── app.py              # Main application
-├── auth.py             # Authentication system
-├── db_manager.py       # Database operations
-├── models.py           # Data models
-├── ui_components.py    # UI components
-├── config.py           # Configuration
-├── static/             # Images and assets
-├── backups/            # Database backups
-└── logs/               # Application logs
-```
-
-### **Key Technologies**
-
-- **Frontend**: Streamlit
-- **Backend**: Python
-- **Database**: SQLite
-- **Authentication**: Custom implementation
-- **Reporting**: ReportLab (PDF generation)
-- **Analytics**: Plotly (charts and graphs)
-
-## 📋 Requirements
-
-### **System Requirements**
-
-- **Operating System**: Windows, macOS, or Linux
-- **RAM**: 512MB minimum, 1GB recommended
-- **Storage**: 100MB available space
-- **Network**: Internet connection for initial setup
-
-### **Python Dependencies**
-
-```
-streamlit==1.29.0
-pandas==2.1.3
-plotly==5.18.0
-Pillow==10.1.0
-reportlab==4.0.7
-openpyxl==3.1.2
-python-dotenv==1.0.0
-bcrypt==4.1.1
-pyotp==2.9.0
-cryptography==41.0.7
-schedule==1.2.0
-psutil==5.9.6
-requests==2.31.0
-appdirs==1.4.4
-```
-
-## 📖 Documentation
-
-### **User Manual**
-
-- Detailed instructions available in the application
-- Context-sensitive help throughout the interface
-- Video tutorials (when available)
-
-### **API Documentation**
-
-- RESTful API endpoints (if web service enabled)
-- Database schema documentation
-- Integration guides
-
-## 🤝 Contributing
-
-### **For Maine DOC Staff**
-
-1. Report issues through official channels
-2. Suggest improvements for operational efficiency
-3. Participate in user acceptance testing
-4. Provide feedback on usability
-
-### **Development Contributions**
-
-- Fork the repository
-- Create feature branches
-- Submit pull requests
-- Follow coding standards
-
-## 📄 License
-
-This software is proprietary to the **Maine Department of Corrections**. All rights reserved.
-
-## 📞 Support
-
-### **Technical Support**
-
-- **Primary Contact**: Tool Control Sergeant, MCC Windham
-- **IT Support**: Maine DOC IT Department
-- **Emergency**: Follow established incident response procedures
-
-### **Training**
-
-- **Initial Training**: Provided during system rollout
-- **Refresher Training**: Available as needed
-- **Documentation**: Available through internal systems
-
-## 🏆 Acknowledgments
-
-### **Developed For**
-
-**Maine Department of Corrections**
-**MCC Windham Facility**
-**Tool Control Program**
-
-### **Special Thanks**
-
-- Corrections Officers and Staff who provided operational requirements
-- IT Department for technical infrastructure support
-- Development team for creating this specialized solution
-
-## 👨‍💻 Developer Background
-
-### **From Resident to Developer**
-
-This application was conceived and developed by an individual who learned programming while incarcerated in the Maine Department of Corrections education program. What began as a journey of rehabilitation and skill-building has evolved into a successful career in software development.
-
-### **MIT's Brave Behind Bars Initiative**
-
-The developer is now a **full-time software engineer** with **MIT's Brave Behind Bars** program - a groundbreaking initiative that provides technology education, mentorship, and employment opportunities to formerly incarcerated individuals. This program recognizes that talent exists everywhere and provides pathways to meaningful careers in technology.
-
-### **Connect with the Developer**
-
-- **GitHub**: ![GitHub Logo](static/12.png) [github.com/MusicalViking](https://github.com/MusicalViking)
-- **LinkedIn**: Available through MIT Brave Behind Bars network
-- **Portfolio**: Showcasing projects developed during incarceration and beyond
-
-### **Mission Alignment**
-
-RadioTrack exemplifies how **education and technology** can transform lives and create solutions that benefit correctional facilities while providing meaningful work opportunities. This project demonstrates the potential for **second chances** and the value of **investing in human potential** regardless of background.
+### **Method 3: Production Deployment**
+See `DEPLOYMENT.md` for detailed production deployment instructions including:
+- Load balancing configuration
+- SSL/TLS setup
+- Database optimization
+- Monitoring and logging
 
 ---
 
-**RadioTrack** - Ensuring operational excellence through comprehensive equipment management.
+## 📱 **User Interface Overview**
 
-_Last Updated: September 2025_
+### **Dashboard Views**
+
+#### **Employee Dashboard**
+- **Post Box**: Internal messaging system for team communication
+- **Quick Stats**: Real-time inventory overview
+- **Distribution Charts**: Visual equipment analysis
+- **Recent Activity**: Latest equipment updates
+
+#### **Admin Dashboard**
+- **System Overview**: Comprehensive system health metrics
+- **Employee Management**: Complete user administration
+- **Database Maintenance**: Backup and system management tools
+- **Advanced Reporting**: Professional compliance reports
+
+#### **Inventory Management**
+- **Advanced Search**: Filter by category, location, condition
+- **Bulk Operations**: Multi-item updates and exports
+- **Export Capabilities**: PDF, Excel, and CSV formats
+- **Audit Trail**: Complete change history
+
+### **Navigation System**
+- **Responsive Sidebar**: Intuitive navigation for all screen sizes
+- **Role-Based Menus**: Context-sensitive menu options
+- **Quick Actions**: Fast access to common tasks
+- **Breadcrumb Navigation**: Clear location awareness
+
+---
+
+## 🔒 **Security & Compliance**
+
+### **Authentication Security**
+- **bcrypt Hashing**: Industry-standard password encryption
+- **Session Management**: Secure session handling with timeout
+- **Rate Limiting**: Protection against brute force attacks
+- **Password Policies**: Enforced complexity requirements
+
+### **Data Protection**
+- **SQL Injection Prevention**: Parameterized queries throughout
+- **Input Validation**: Comprehensive data validation
+- **Access Control**: Role-based permission system
+- **Audit Logging**: Complete activity tracking
+
+### **Operational Security**
+- **Automatic Backups**: Regular database snapshots
+- **Data Integrity**: Foreign key constraints and validation
+- **Error Handling**: Secure error reporting without data leakage
+- **Environment Configuration**: Secure credential management
+
+---
+
+## 📊 **Database Architecture**
+
+### **Core Data Model**
+```
+employees (👥 Users & Authentication)
+├── id, username, password_hash, role
+├── first_name, last_name, position
+├── email, phone, created_date
+└── last_login, password_change_required
+
+items (📦 Radio Equipment Inventory)
+├── id, name, category, location
+├── condition, notes, created_date
+├── last_modified, created_by
+└── assigned_to, serial_number
+
+posts (📌 Internal Communications)
+├── id, author_username, content
+├── created_date, last_modified
+└── priority, category
+
+locations & categories (📍 Reference Data)
+├── id, name, description
+├── active, created_date
+└── last_modified
+```
+
+### **Key Relationships**
+- **Users** manage **Items** with full audit trail
+- **Locations** and **Categories** provide structured organization
+- **Posts** enable team communication and announcements
+- **All changes** are tracked with timestamps and user attribution
+
+---
+
+## 🛠️ **Development & Customization**
+
+### **Project Structure**
+```
+radiotrack/
+├── app.py                    # Main Streamlit application
+├── auth.py                   # Authentication & authorization
+├── db_manager.py             # Database operations & management
+├── models.py                 # Data models & business logic
+├── ui_components.py          # Reusable UI components
+├── ui_dialogs.py             # Modal dialogs & notifications
+├── config.py                 # Configuration management
+├── logging_config.py         # Logging configuration
+├── pdf_generator.py          # PDF report generation
+├── simple_backup.py          # Database backup system
+├── static/                   # Images, CSS, and assets
+├── backups/                  # Database backup files
+├── logs/                     # Application log files
+├── data/                     # Database and data files
+├── .env                      # Environment configuration
+├── requirements.txt          # Python dependencies
+├── Dockerfile               # Docker container definition
+└── docker-compose.yml       # Docker Compose configuration
+```
+
+### **Customization Options**
+- **Categories & Locations**: Modify `config.py` for your facility
+- **Security Policies**: Adjust password and session settings
+- **UI Branding**: Customize colors and styling in `ui_components.py`
+- **Reporting**: Extend PDF reports in `pdf_generator.py`
+- **Authentication**: Enhance security in `auth.py`
+
+---
+
+## 🔧 **Troubleshooting Guide**
+
+### **Common Issues & Solutions**
+
+#### **Application Won't Start**
+```bash
+# Check Python version
+python --version
+
+# Verify dependencies
+pip list | grep streamlit
+
+# Check for port conflicts
+netstat -an | grep 8501
+
+# Try alternative port
+streamlit run app.py --server.port 8502
+```
+
+#### **Database Connection Issues**
+```bash
+# Check database file exists
+ls -la data/inventory.db
+
+# Verify permissions
+chmod 644 data/inventory.db
+
+# Reinitialize database
+python -c "from db_manager import initialize_db; initialize_db()"
+```
+
+#### **Login Problems**
+```bash
+# Reset admin password
+python -c "
+from auth import hash_password
+from db_manager import DatabaseManager
+import sqlite3
+
+# Connect to database
+conn = sqlite3.connect('data/inventory.db')
+cursor = conn.cursor()
+
+# Update admin password
+hashed = hash_password('Admin@123!')
+cursor.execute('UPDATE employees SET password_hash = ? WHERE username = ?', (hashed, 'admin'))
+conn.commit()
+conn.close()
+print('Admin password reset to: Admin@123!')
+"
+```
+
+#### **Permission Errors**
+```bash
+# Fix file permissions (Linux/macOS)
+chmod -R 755 radiotrack/
+chmod -R 644 radiotrack/data/
+chmod -R 644 radiotrack/logs/
+
+# Fix file permissions (Windows)
+# Right-click folder → Properties → Security → Edit permissions
+```
+
+#### **Docker Issues**
+```bash
+# Check Docker status
+docker ps -a
+
+# Clean up containers
+docker-compose down
+docker system prune -f
+
+# Rebuild containers
+docker-compose build --no-cache
+docker-compose up -d
+```
+
+### **Getting Help**
+1. **Check Logs**: `tail -f logs/radiotrack.log`
+2. **Docker Logs**: `docker-compose logs -f radiotrack`
+3. **Database Status**: Check `data/inventory.db` file size and modification date
+4. **System Resources**: Monitor memory and disk usage
+
+---
+
+## 📈 **Performance & Monitoring**
+
+### **System Health Checks**
+- **Database Size**: Monitor growth in `data/inventory.db`
+- **Log Files**: Regular review of `logs/` directory
+- **Backup Status**: Verify backup creation in `backups/` directory
+- **Memory Usage**: Monitor application resource consumption
+
+### **Optimization Tips**
+- **Regular Backups**: Configure automated backup schedules
+- **Log Rotation**: Implement log file rotation for long-term deployments
+- **Database Maintenance**: Regular VACUUM operations for SQLite
+- **Cache Management**: Clear Streamlit cache periodically
+
+---
+
+## 📚 **Advanced Configuration**
+
+### **Environment Variables**
+```bash
+# Create .env file
+cp .env.example .env
+
+# Configure key settings
+DEBUG_MODE=True
+LOG_LEVEL=INFO
+SESSION_EXPIRY_HOURS=2
+PASSWORD_EXPIRY_DAYS=60
+```
+
+### **Custom Categories & Locations**
+Edit `config.py` to customize:
+- Equipment categories specific to your facility
+- Location names relevant to your operations
+- Security policies and timeouts
+- Branding and appearance settings
+
+---
+
+## 🤝 **Support & Contributing**
+
+### **For Maine DOC Staff**
+- **Primary Support**: Tool Control Sergeant, MCC Windham
+- **IT Support**: Maine DOC IT Department
+- **Training**: Available through internal training programs
+- **Documentation**: Comprehensive user guides available
+
+### **Technical Contributions**
+- Fork the repository for custom modifications
+- Submit issues for bug reports and feature requests
+- Follow development best practices for code contributions
+- Maintain security standards for all changes
+
+---
+
+## 📄 **License & Compliance**
+
+This software is **proprietary to the Maine Department of Corrections**.
+
+- **Copyright**: © 2025 Maine Department of Corrections
+- **All Rights Reserved**
+- **Authorized Use Only**: Licensed for official DOC use
+- **Security Classification**: Internal Use Only
+
+---
+
+## 🏆 **Acknowledgments**
+
+### **Developed For**
+**Maine Department of Corrections**  
+**MCC Windham Facility**  
+**Tool Control Program**
+
+### **Special Recognition**
+- **Corrections Officers** who provided operational requirements
+- **IT Department** for infrastructure and technical support
+- **Development Team** for creating this specialized solution
+
+### **Developer Story**
+This application was conceived and developed by an individual who learned programming while incarcerated in the Maine Department of Corrections education program. What began as a journey of rehabilitation and skill-building has evolved into a successful career in software development.
+
+The developer is now a **full-time software engineer** with **MIT's Brave Behind Bars** program - a groundbreaking initiative providing technology education, mentorship, and employment opportunities to formerly incarcerated individuals.
+
+---
+
+## 📞 **Contact Information**
+
+### **Technical Support**
+- **Primary Contact**: Tool Control Sergeant, MCC Windham
+- **IT Support**: Maine DOC IT Department
+- **Emergency Support**: Follow established incident response procedures
+
+### **Training & Documentation**
+- **Initial Training**: Provided during system rollout
+- **Refresher Training**: Available as needed
+- **Documentation**: Available through internal DOC systems
+
+---
+
+**RadioTrack** - Professional radio equipment management for corrections professionals.
+
+_Last Updated: January 2025_
