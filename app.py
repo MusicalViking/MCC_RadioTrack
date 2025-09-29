@@ -3,7 +3,9 @@ RadioTrack - Radio Inventory Management System
 --------------------------------------
 Main application file for Streamlit UI
 --------------------------------------
-Author: github/musicalviking
+Author: Arthur Belanger (github.com/MusicalViking)
+Copyright (c) 2025 Arthur Belanger
+All rights reserved.
 """
 
 import json

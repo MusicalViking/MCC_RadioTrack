@@ -1,15 +1,16 @@
 """
-Recreation Inventory Management System
+RadioTrack - Radio Inventory Management System
 --------------------------------------
 simple_backup.py file for Streamlit UI
 --------------------------------------
-Author: github/musicalviking
+Author: Arthur Belanger (github.com/MusicalViking)
+Copyright (c) 2025 Arthur Belanger
+All rights reserved.
 """
 
 import os
 import shutil
 import time
-import sqlite3
 import threading
 from pathlib import Path
 from datetime import datetime, timedelta

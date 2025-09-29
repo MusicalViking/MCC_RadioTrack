@@ -3,7 +3,9 @@ RadioTrack - Department of Corrections Radio Management System
 --------------------------------------
 pdf_generator.py file for Streamlit UI
 --------------------------------------
-Author: github/musicalviking
+Author: Arthur Belanger (github.com/MusicalViking)
+Copyright (c) 2025 Arthur Belanger
+All rights reserved.
 """
 
 import io

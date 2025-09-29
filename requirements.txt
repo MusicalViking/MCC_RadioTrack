@@ -1,14 +1,49 @@
-streamlit==1.29.0
-pandas==2.1.3
+# RadioTrack - Maine Department of Corrections Radio Inventory Management System
+# Copyright (c) 2025 Arthur Belanger (github.com/MusicalViking)
+# All rights reserved.
+
+# Requirements for Production Deployment
+# Updated: January 2025
+
+# Core Web Framework
+streamlit==1.40.2
+
+# Data Processing & Analysis
+pandas==2.2.0
 plotly==5.18.0
+
+# Image Processing
 Pillow==10.1.0
+
+# PDF Generation
 reportlab==4.0.7
+
+# Excel File Processing
 openpyxl==3.1.2
+
+# Environment Management
 python-dotenv==1.0.0
-bcrypt==4.1.1  # Added for more secure password hashing
-pyotp==2.9.0  # Added for 2FA support
-cryptography==41.0.7  # Added for secure token generation
-schedule==1.2.0  # For scheduled backups
-psutil==5.9.6  # For system monitoring
-requests==2.31.0  # For API integrations
-appdirs==1.4.4  # For managing application directories
+
+# Security & Authentication
+bcrypt==4.1.1
+pyotp==2.9.0
+cryptography==41.0.7
+
+# System Monitoring & Scheduling
+schedule==1.2.0
+psutil==5.9.6
+
+# HTTP Requests (for future API integrations)
+requests==2.31.0
+
+# Application Directory Management
+appdirs==1.4.4
+
+# Optional: Email notifications (uncomment if needed)
+# smtplib is built-in, but for enhanced email features:
+# secure-smtplib==0.1.1
+
+# Development dependencies (consider moving to dev-requirements.txt for production)
+# pytest==7.4.0
+# black==23.7.0
+# flake8==6.0.0

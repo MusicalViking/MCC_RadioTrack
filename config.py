@@ -3,7 +3,9 @@ RadioTrack - Radio Inventory Management System
 --------------------------------------
 config.py file for Streamlit UI
 --------------------------------------
-Author: github/musicalviking
+Author: Arthur Belanger (github.com/MusicalViking)
+Copyright (c) 2025 Arthur Belanger
+All rights reserved.
 """
 
 import os
@@ -76,7 +78,9 @@ ROLE_HIERARCHY = {
     "corrections_supervisor": 3,  # Same level as admin
 }
 
-# Category and Location Lists
+''' Category and Location Lists/I hardcoded these so you can set them once and not worry about anyone else changing locations of anything.
+I used generic names for now, but you can change them to whatever you want.'''
+
 CATEGORIES = [
     "Portable Radios",
     "Mobile Radios",

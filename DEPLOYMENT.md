@@ -1,4 +1,4 @@
-# RadioTrack - MCC Radio Management System
+# RadioTrack - Department of Corrections Radio Management System
 
 ---
 
@@ -30,6 +30,7 @@ cd RadioTrack
 ### 2. Configure Environment Variables
 
 Create a `.env` file in the project root with the following contents, replacing placeholders with your actual values:
+
 ```
 # Database Configuration
 DB_PATH=/app/data/inventory.db
@@ -66,7 +67,8 @@ SMTP_USERNAME=your_email@example.com
 SMTP_PASSWORD=your_smtp_password
 SMTP_FROM_EMAIL=radiotrack@example.com
 ```
-```
+
+````
 
 ### 3. Build and Start the Docker Container
 
@@ -74,7 +76,7 @@ Use Docker Compose to build and start the application:
 
 ```bash
 docker-compose up -d --build
-```
+````
 
 This will:
 
