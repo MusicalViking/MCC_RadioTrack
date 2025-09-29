@@ -1,6 +1,6 @@
-# 📡 RadioTrack - MCC Radio Inventory Management System
+# 📡 RadioTrack - MCC Radio/Equipment Management System
 
-**Maine Department of Corrections - Professional Radio Equipment Management**
+**Maine Department of Corrections - MCC Radio/Equipment Management System**
 
 > **Copyright (c) 2025 Arthur Belanger (github.com/MusicalViking)**
 > All rights reserved.
@@ -19,6 +19,7 @@
 **RadioTrack** is a mission-critical radio equipment inventory management system designed specifically for the **Maine Department of Corrections**. This enterprise-grade application ensures operational readiness, maintains strict accountability, and provides real-time visibility into radio equipment status across all DOC facilities.
 
 ### **Key Benefits**
+
 - ✅ **Compliance Ready** - Meets DOC tool control requirements
 - ✅ **Zero Downtime Design** - reliable 24/7 operation
 - ✅ **User-Friendly Interface** - Intuitive for all staff levels
@@ -30,6 +31,7 @@
 ## 🚀 Quick Start (5 Minutes)
 
 ### **Option 1: Docker (Recommended)**
+
 ```bash
 # 1. Download and navigate to project
 cd /path/to/RadioTrack
@@ -42,6 +44,7 @@ sudo docker-compose up -d --build
 ```
 
 ### **Option 2: Native Installation**
+
 ```bash
 # 1. Install Python dependencies
 pip install -r requirements.txt
@@ -54,6 +57,7 @@ streamlit run app.py
 ```
 
 ### **First Login**
+
 - **Username:** `admin`
 - **Password:** `Admin@123!`
 
@@ -64,10 +68,12 @@ streamlit run app.py
 ## 📋 System Overview
 
 ### **User Roles**
+
 - **👨‍💼 Corrections Supervisors** - Full system access, user management
 - **👮‍♂️ officers/Staff** - View inventory, update conditions, post messages
 
 ### **Core Features**
+
 - 📦 **Equipment Tracking** - 12 categories, 18 locations
 - 📊 **Real-time Dashboard** - Visual analytics and alerts
 - 🔐 **Enterprise Security** - bcrypt hashing, session management
@@ -76,6 +82,7 @@ streamlit run app.py
 - 💾 **Automated Backups** - Daily database snapshots
 
 ### **Equipment Categories**
+
 - Portable Radios, Mobile Radios, Base Stations
 - Antennas, Batteries, Microphones, Programming Equipment
 - Test Equipment, Cables & Accessories
@@ -85,18 +92,21 @@ streamlit run app.py
 ## 🔧 Administration Guide
 
 ### **User Management**
+
 1. Login as Corrections Supervisor
 2. Navigate to **Admin Dashboard** → **Employee Management**
 3. Click **Add New Employee** to create accounts
 4. Set appropriate roles (Employee/Supervisor)
 
 ### **Inventory Management**
+
 1. **Add Equipment:** Use **Add New Radio** form
 2. **Update Status:** Edit existing items via inventory table
 3. **Monitor Conditions:** Dashboard shows alerts for poor condition items
 4. **Generate Reports:** Export PDF/Excel reports as needed
 
 ### **Backup & Recovery**
+
 1. **Automated Backups:** Daily backups created automatically
 2. **Manual Backups:** Use **Admin Dashboard** → **Create Backup**
 3. **Restore:** Download and restore from backup files
@@ -106,17 +116,20 @@ streamlit run app.py
 ## 🔒 Security Features
 
 ### **Authentication**
+
 - **bcrypt Password Hashing** - Military-grade encryption
 - **Account Lockout** - 5 failed attempts triggers 15-minute lockout
 - **Session Management** - 2-hour automatic timeout
 - **Password Policies** - 8+ characters, mixed case, numbers, symbols
 
 ### **Access Control**
+
 - **Role-Based Permissions** - Granular access by user type
 - **Audit Logging** - All changes tracked with timestamps
 - **Data Validation** - SQL injection prevention
 
 ### **Data Protection**
+
 - **Encrypted Storage** - Sensitive data properly secured
 - **Backup Encryption** - Database backups are protected
 - **Access Logging** - Failed login attempts monitored
@@ -126,12 +139,14 @@ streamlit run app.py
 ## 📊 Monitoring & Alerts
 
 ### **Real-Time Monitoring**
+
 - **Condition Alerts** - Automatic warnings for equipment needing attention
 - **System Health** - Database performance and backup status
 - **User Activity** - Login tracking and session monitoring
 
 ### **Alert Types**
-- 🚨 **Critical:** Equipment in s**: Highlight equipment requiring immediate action
+
+- 🚨 **Critical:** Equipment in s\*\*: Highlight equipment requiring immediate action
 
 ### **📊 Analytics & Business Intelligence**
 
