@@ -40,7 +40,9 @@ def generate_inventory_pdf(report_type="complete", filter_value=None):
             topMargin=0.5*inch,
             bottomMargin=0.5*inch,
             author="RadioTrack",
-            title="MCC Radio Inventory Report"
+            title="MCC Radio Inventory Report",
+            # Allow tables to fit within page boundaries
+            allowSplitting=1
         )
 
         styles = getSampleStyleSheet()
@@ -96,31 +98,40 @@ def generate_inventory_pdf(report_type="complete", filter_value=None):
             elements.append(summary_table)
             elements.append(Spacer(1, 20))
 
-        # Enhanced filtered reports with better styling and word wrapping
+            # Enhanced filtered reports with proper word wrapping
         if report_type in ["category", "condition", "location"] and filter_value and len(items) > 0:
             # Create enhanced table with better styling
             table_data = [["Item Name", "Category", "Location", "Condition", "Notes"]]
 
             for _, item in items.iterrows():
-                # Handle long text by truncating if necessary for table display
-                name = str(item["name"])[:50] + "..." if len(str(item["name"])) > 50 else str(item["name"])
-                category = str(item["category"])[:30] + "..." if len(str(item["category"])) > 30 else str(item["category"])
-                location = str(item["location"])[:30] + "..." if len(str(item["location"])) > 30 else str(item["location"])
+                # Use Paragraph objects for proper word wrapping instead of truncating
+                name_style = ParagraphStyle("name_style", fontSize=9, leading=11, wordWrap='CJK')  # Enable word wrapping
+                cat_style = ParagraphStyle("cat_style", fontSize=9, leading=11, wordWrap='CJK')
+                loc_style = ParagraphStyle("loc_style", fontSize=9, leading=11, wordWrap='CJK')
+                notes_style = ParagraphStyle("notes_style", fontSize=9, leading=11, wordWrap='CJK')
+
+                name = Paragraph(str(item["name"]), name_style)
+                category = Paragraph(str(item["category"]), cat_style)
+                location = Paragraph(str(item["location"]), loc_style)
                 condition = str(item["condition"])
-                notes = str(item["notes"])[:50] + "..." if pd.notna(item["notes"]) and len(str(item["notes"])) > 50 else (str(item["notes"]) if pd.notna(item["notes"]) else "")
+                notes = Paragraph(str(item["notes"]) if pd.notna(item["notes"]) else "", notes_style)
 
                 table_data.append([name, category, location, condition, notes])
 
-            # Create table with enhanced styling and better column widths
+            # Create table with enhanced styling and optimized column widths
             table = Table(
                 table_data,
-                colWidths=[2.2 * inch, 1.8 * inch, 1.8 * inch, 1.2 * inch, 2.5 * inch],
+                colWidths=[2.5 * inch, 1.8 * inch, 1.8 * inch, 1.2 * inch, 2.7 * inch],  # Optimized to fit 10" available width
                 repeatRows=1
             )
 
-            # Enable row splitting for better text handling
+            # Enable row splitting and proper text wrapping
             table.splitByRow = 1
             table.spaceAfter = 15
+            table.hAlign = 'LEFT'
+            # Ensure proper table breaking across pages
+            table.repeatRows = 1
+            table.repeatCols = 0
 
             table.setStyle(
                 TableStyle([
@@ -133,7 +144,7 @@ def generate_inventory_pdf(report_type="complete", filter_value=None):
                     ("BOTTOMPADDING", (0, 0), (-1, 0), 12),
                     ("TOPPADDING", (0, 0), (-1, 0), 12),
                     ("VALIGN", (0, 0), (-1, 0), "MIDDLE"),
-                    # Enhanced content styling with better spacing
+                    # Enhanced content styling with word wrap support
                     ("BACKGROUND", (0, 1), (-1, -1), colors.HexColor("#F8F9FA")),
                     ("GRID", (0, 0), (-1, -1), 1, colors.HexColor("#DEE2E6")),
                     ("VALIGN", (0, 1), (-1, -1), "TOP"),
@@ -144,15 +155,15 @@ def generate_inventory_pdf(report_type="complete", filter_value=None):
                 ])
             )
 
-            # Add alternating row colors for better readability
+            # Add alternating row colors
             for i in range(1, len(table_data)):
                 bg_color = colors.HexColor("#FFFFFF") if i % 2 == 0 else colors.HexColor("#F5F5F5")
                 table.setStyle(TableStyle([("BACKGROUND", (0, i), (-1, i), bg_color)]))
 
             elements.append(table)
 
-        elif report_type == "complete" and len(items) > 0:
-            # Enhanced complete reports with better styling
+        # Enhanced complete reports with location-based grouping
+        if report_type == "complete" and len(items) > 0:
             locations = get_locations()
             for location in sorted(locations):
                 location_items = items[items["location"] == location]
@@ -173,22 +184,30 @@ def generate_inventory_pdf(report_type="complete", filter_value=None):
                     table_data = [["Item Name", "Category", "Condition", "Notes"]]
 
                     for _, item in location_items.iterrows():
-                        # Handle long text appropriately
-                        name = str(item["name"])[:45] + "..." if len(str(item["name"])) > 45 else str(item["name"])
-                        category = str(item["category"])[:25] + "..." if len(str(item["category"])) > 25 else str(item["category"])
+                        # Use Paragraph objects for proper word wrapping instead of truncating
+                        name_style = ParagraphStyle("name_style", fontSize=8, leading=10, wordWrap='CJK')  # Enable word wrapping
+                        cat_style = ParagraphStyle("cat_style", fontSize=8, leading=10, wordWrap='CJK')
+                        notes_style = ParagraphStyle("notes_style", fontSize=8, leading=10, wordWrap='CJK')
+
+                        name = Paragraph(str(item["name"]), name_style)
+                        category = Paragraph(str(item["category"]), cat_style)
                         condition = str(item["condition"])
-                        notes = str(item["notes"])[:40] + "..." if pd.notna(item["notes"]) and len(str(item["notes"])) > 40 else (str(item["notes"]) if pd.notna(item["notes"]) else "")
+                        notes = Paragraph(str(item["notes"]) if pd.notna(item["notes"]) else "", notes_style)
 
                         table_data.append([name, category, condition, notes])
 
                     table = Table(
                         table_data,
-                        colWidths=[2.2 * inch, 1.8 * inch, 1.2 * inch, 2.5 * inch],
+                        colWidths=[2.5 * inch, 1.8 * inch, 1.2 * inch, 3.5 * inch],  # Optimized for complete report layout
                         repeatRows=1
                     )
 
                     table.splitByRow = 1
                     table.spaceAfter = 15
+                    table.hAlign = 'LEFT'
+                    # Ensure proper table breaking across pages
+                    table.repeatRows = 1
+                    table.repeatCols = 0
 
                     table.setStyle(
                         TableStyle([
@@ -201,7 +220,7 @@ def generate_inventory_pdf(report_type="complete", filter_value=None):
                             ("BOTTOMPADDING", (0, 0), (-1, 0), 10),
                             ("TOPPADDING", (0, 0), (-1, 0), 10),
                             ("VALIGN", (0, 0), (-1, 0), "MIDDLE"),
-                            # Enhanced content styling
+                            # Enhanced content styling with word wrap support
                             ("BACKGROUND", (0, 1), (-1, -1), colors.HexColor("#F8F9FA")),
                             ("GRID", (0, 0), (-1, -1), 1, colors.HexColor("#DEE2E6")),
                             ("VALIGN", (0, 1), (-1, -1), "TOP"),
