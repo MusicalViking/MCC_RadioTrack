@@ -365,8 +365,8 @@ def admin_dashboard_page():
 
     # System Overview tab
     with tab1:
-        # System monitoring
-        render_system_stats()
+        # System monitoring - commented out as not needed now
+        # render_system_stats()
 
         # Post Box Section
         st.subheader("📌 Announcements")
@@ -420,6 +420,116 @@ def admin_dashboard_page():
             else:
                 st.info("No announcements yet. Post your first announcement!")
 
+        # Add PDF export options after the posts section
+        st.divider()
+        st.subheader("📄 Export Options")
+
+        col1, col2 = st.columns([2, 1])
+
+        with col1:
+            dashboard_report_type = st.selectbox(
+                "Report Type",
+                options=["Complete Inventory", "Single Item", "By Location", "By Category", "By Condition"],
+                help="Select the type of report to generate",
+                key="dashboard_export_report_type"
+            )
+
+        with col2:
+            dashboard_filter_value = None
+
+            if dashboard_report_type == "Single Item":
+                # Get all items for selection
+                all_items = get_items()
+                if not all_items.empty:
+                    item_options = [f"{row['name']} (ID: {row['id']})" for _, row in all_items.iterrows()]
+                    item_selection = st.selectbox(
+                        "Select Item",
+                        options=[""] + item_options,
+                        help="Choose a specific item to generate a detailed report for",
+                        key="dashboard_export_item_selection"
+                    )
+                    if item_selection:
+                        # Extract item ID from selection
+                        dashboard_filter_value = int(item_selection.split("(ID: ")[1].rstrip(")"))
+                else:
+                    st.info("No items available for selection")
+
+            elif dashboard_report_type == "By Location":
+                dashboard_filter_value = st.selectbox(
+                    "Select Location",
+                    options=[""] + LOCATIONS,
+                    help="Choose a location to generate a location-specific report",
+                    key="dashboard_export_location_filter"
+                ) or None
+
+            elif dashboard_report_type == "By Category":
+                dashboard_filter_value = st.selectbox(
+                    "Select Category",
+                    options=[""] + CATEGORIES,
+                    help="Choose a category to generate a category-specific report",
+                    key="dashboard_export_category_filter"
+                ) or None
+
+            elif dashboard_report_type == "By Condition":
+                dashboard_filter_value = st.selectbox(
+                    "Select Condition",
+                    options=[""] + ["Excellent", "Good", "Fair", "Poor", "Need for order"],
+                    help="Choose a condition to generate a condition-specific report",
+                    key="dashboard_export_condition_filter"
+                ) or None
+
+        # Dashboard export buttons
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("📊 Export to Excel", key="dashboard_export_excel"):
+                # Save to Excel
+                output = BytesIO()
+                items.to_excel(output, index=False, engine="openpyxl")
+                st.download_button(
+                    label="Download MCC Radio Inventory Excel",
+                    data=output.getvalue(),
+                    file_name="MCCRadinventory.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    key="dashboard_excel_download"
+                )
+        with col2:
+            if st.button("📄 Export to PDF", key="dashboard_export_pdf"):
+                # Determine report type and filter
+                report_type_code = "complete"
+                if dashboard_report_type == "Single Item" and dashboard_filter_value:
+                    report_type_code = "item"
+                elif dashboard_report_type == "By Location" and dashboard_filter_value:
+                    report_type_code = "location"
+                elif dashboard_report_type == "By Category" and dashboard_filter_value:
+                    report_type_code = "category"
+                elif dashboard_report_type == "By Condition" and dashboard_filter_value:
+                    report_type_code = "condition"
+
+                pdf_buffer = generate_inventory_pdf(report_type_code, dashboard_filter_value)
+
+                # Generate appropriate filename with timestamp
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                if report_type_code == "complete":
+                    filename = f"MCCRadinventory_{timestamp}.pdf"
+                elif report_type_code == "item":
+                    # Get item name for filename
+                    all_items = get_items()
+                    item_row = all_items[all_items["id"] == dashboard_filter_value]
+                    item_name = item_row["name"].iloc[0] if not item_row.empty else "Unknown"
+                    filename = f"MCC_{item_name}_Report_{timestamp}.pdf"
+                else:
+                    filename = f"MCC_{dashboard_filter_value}_Report_{timestamp}.pdf"
+
+                st.download_button(
+                    label="Download MCC Radio Inventory PDF",
+                    data=pdf_buffer,
+                    file_name=filename,
+                    mime="application/pdf",
+                    key="dashboard_pdf_download"
+                )
+
+        st.divider()
+
         # Distribution Charts
         col1, col2 = st.columns(2)
 
@@ -440,14 +550,13 @@ def admin_dashboard_page():
         st.markdown("<br>", unsafe_allow_html=True)
         if st.button(" Print Complete MCC Inventory"):
             pdf_buffer = generate_inventory_pdf()
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             st.download_button(
                 label=" Download MCC Inventory PDF",
                 data=pdf_buffer,
-                file_name="MCC_inventory.pdf",
+                file_name=f"MCC_inventory_{timestamp}.pdf",
                 mime="application/pdf",
             )
-
-    # Employee management tab
     with tab2:
         st.subheader("Employee Management")
 
@@ -799,6 +908,116 @@ def inventory_page():
         # Display total count
         st.header(f"Total Items: {len(filtered_items)}")
 
+        # Add PDF report type selection and export buttons at the top
+        st.divider()
+        st.subheader("📄 PDF Export Options")
+
+        col1, col2 = st.columns([2, 1])
+
+        with col1:
+            report_type = st.selectbox(
+                "Report Type",
+                options=["Complete Inventory", "Single Item", "By Location", "By Category", "By Condition"],
+                help="Select the type of report to generate",
+                key="export_report_type"  # Add unique key
+            )
+
+        with col2:
+            filter_value = None
+
+            if report_type == "Single Item":
+                # Get all items for selection
+                all_items = get_items()
+                if not all_items.empty:
+                    item_options = [f"{row['name']} (ID: {row['id']})" for _, row in all_items.iterrows()]
+                    item_selection = st.selectbox(
+                        "Select Item",
+                        options=[""] + item_options,
+                        help="Choose a specific item to generate a detailed report for",
+                        key="export_item_selection"
+                    )
+                    if item_selection:
+                        # Extract item ID from selection
+                        filter_value = int(item_selection.split("(ID: ")[1].rstrip(")"))
+                else:
+                    st.info("No items available for selection")
+
+            elif report_type == "By Location":
+                filter_value = st.selectbox(
+                    "Select Location",
+                    options=[""] + LOCATIONS,
+                    help="Choose a location to generate a location-specific report",
+                    key="export_location_filter"
+                ) or None
+
+            elif report_type == "By Category":
+                filter_value = st.selectbox(
+                    "Select Category",
+                    options=[""] + CATEGORIES,
+                    help="Choose a category to generate a category-specific report",
+                    key="export_category_filter"
+                ) or None
+
+            elif report_type == "By Condition":
+                filter_value = st.selectbox(
+                    "Select Condition",
+                    options=[""] + ["Excellent", "Good", "Fair", "Poor", "Need for order"],
+                    help="Choose a condition to generate a condition-specific report",
+                    key="export_condition_filter"
+                ) or None
+
+        # Export buttons
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("📊 Export to Excel", key="export_excel"):
+                # Save to Excel
+                output = BytesIO()
+                filtered_items.to_excel(output, index=False, engine="openpyxl")
+                st.download_button(
+                    label="Download MCC Radio Inventory Excel",
+                    data=output.getvalue(),
+                    file_name="MCCRadinventory.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    key="excel_download"
+                )
+        with col2:
+            if st.button("📄 Export to PDF", key="export_pdf"):
+                # Determine report type and filter
+                report_type_code = "complete"
+                if report_type == "Single Item" and filter_value:
+                    report_type_code = "item"
+                elif report_type == "By Location" and filter_value:
+                    report_type_code = "location"
+                elif report_type == "By Category" and filter_value:
+                    report_type_code = "category"
+                elif report_type == "By Condition" and filter_value:
+                    report_type_code = "condition"
+
+                pdf_buffer = generate_inventory_pdf(report_type_code, filter_value)
+
+                # Generate appropriate filename with timestamp
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                if report_type_code == "complete":
+                    filename = f"MCCRadinventory_{timestamp}.pdf"
+                elif report_type_code == "item":
+                    # Get item name for filename
+                    all_items = get_items()
+                    item_row = all_items[all_items["id"] == filter_value]
+                    item_name = item_row["name"].iloc[0] if not item_row.empty else "Unknown"
+                    filename = f"MCC_{item_name}_Report_{timestamp}.pdf"
+                else:
+                    filename = f"MCC_{filter_value}_Report_{timestamp}.pdf"
+
+                st.download_button(
+                    label="Download MCC Radio Inventory PDF",
+                    data=pdf_buffer,
+                    file_name=filename,
+                    mime="application/pdf",
+                    key="pdf_download"
+                )
+
+        st.divider()
+
         # Render inventory table
         for _, item in filtered_items.iterrows():
             with st.container():
@@ -853,28 +1072,6 @@ def inventory_page():
 
         st.divider()
 
-        # Add export buttons at the bottom
-        col1, col2 = st.columns(2)
-        with col1:
-            if st.button("📊 Export to Excel"):
-                # Save to Excel
-                output = BytesIO()
-                filtered_items.to_excel(output, index=False, engine="openpyxl")
-                st.download_button(
-                    label="Download MCC Radio Inventory Excel",
-                    data=output.getvalue(),
-                    file_name="MCCRadinventory.xlsx",
-                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                )
-        with col2:
-            if st.button("📄 Export to PDF"):
-                pdf_buffer = generate_inventory_pdf()
-                st.download_button(
-                    label="Download MCC Radio Inventory PDF",
-                    data=pdf_buffer,
-                    file_name="MCCRadinventory.pdf",
-                    mime="application/pdf",
-                )
     except Exception as e:
         st.error("Failed to load inventory items. Please try again.")
         logger.error(f"Error in inventory page: {str(e)}")
@@ -1078,14 +1275,23 @@ def generate_health_report():
     from pathlib import Path
 
     from reportlab.lib import colors
-    from reportlab.lib.pagesizes import letter
+    from reportlab.lib.pagesizes import letter, landscape
     from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
     from reportlab.lib.units import inch
     from reportlab.platypus import (Paragraph, SimpleDocTemplate, Spacer,
                                     Table, TableStyle)
 
     buffer = BytesIO()
-    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    doc = SimpleDocTemplate(
+        buffer, 
+        pagesize=landscape(letter),
+        leftMargin=0.42*inch,
+        rightMargin=0.42*inch,
+        topMargin=0.5*inch,
+        bottomMargin=0.5*inch,
+        author="RadioTrack",
+        title="MCC Radio Database Health Report"
+    )
     styles = getSampleStyleSheet()
     story = []
 
@@ -1162,11 +1368,13 @@ def generate_health_report():
                 ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
                 ("FONTSIZE", (0, 0), (-1, 0), 12),
                 ("BOTTOMPADDING", (0, 0), (-1, 0), 12),
+                ("VALIGN", (0, 0), (-1, 0), "MIDDLE"),
                 # Content rows
                 ("BACKGROUND", (0, 1), (-1, -1), colors.HexColor("#E3F2FD")),
                 ("GRID", (0, 0), (-1, -1), 1, colors.HexColor("#BBDEFB")),
                 ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
                 ("ALIGN", (2, 0), (2, -1), "CENTER"),  # Center the Status column
+                ("VALIGN", (0, 1), (-1, -1), "TOP"),
                 # Alternating row colors
                 ("BACKGROUND", (0, 1), (-1, 1), colors.HexColor("#E3F2FD")),
                 ("BACKGROUND", (0, 3), (-1, 3), colors.HexColor("#E3F2FD")),
@@ -1240,11 +1448,13 @@ def generate_health_report():
                 ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
                 ("FONTSIZE", (0, 0), (-1, 0), 12),
                 ("BOTTOMPADDING", (0, 0), (-1, 0), 12),
+                ("VALIGN", (0, 0), (-1, 0), "MIDDLE"),
                 # Content formatting
                 ("BACKGROUND", (0, 1), (-1, -1), colors.HexColor("#E3F2FD")),
                 ("GRID", (0, 0), (-1, -1), 1, colors.HexColor("#BBDEFB")),
                 ("ALIGN", (1, 1), (1, -1), "CENTER"),  # Center the count column
                 ("ALIGN", (3, 1), (3, -1), "CENTER"),  # Center the status column
+                ("VALIGN", (0, 1), (-1, -1), "TOP"),
                 # Alternating row colors for readability
             ]
             + [

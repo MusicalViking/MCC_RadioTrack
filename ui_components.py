@@ -751,6 +751,15 @@ def render_sidebar_navigation(user_role):
             "🚪 Logout", use_container_width=True, type="primary"
         )
 
+        # Add separator before copyright
+        st.markdown("---")
+
+        # Copyright notice at the bottom
+        st.markdown(
+            "<p style='text-align: center; font-size: 0.8rem; color: #666; margin: 10px 0;'>© 2025 by Arthur Belanger<br>MCC Windham Education Dept</p>",
+            unsafe_allow_html=True,
+        )
+
         return logout_clicked
 
     # Render system resource statistics
